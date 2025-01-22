@@ -596,7 +596,7 @@ class PgdpFileHtml(PgdpFile):
     def remove_wordjoin(self):
         """Remove word join (NoBreak) (U+2060)."""
         if self.args.suppress_word_join:
-            #self.text = re.sub(r"\u2060", r"", self.text)
+            self.text = re.sub(r"\u2060", r"", self.text)
             self.text = re.sub(r"&NoBreak;", r"", self.text)
 
     def remove_soft_hyphen(self):
@@ -1069,7 +1069,7 @@ def output_html(html_content, filename1, filename2, css):
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Compare""" + filename1 + " and " + filename2 + """</title>
+  <title>Compare """ + filename1 + " and " + filename2 + """</title>
   <style type="text/css">
 """)
     print(DIFF_CSS)
