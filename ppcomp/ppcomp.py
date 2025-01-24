@@ -49,6 +49,10 @@ DEFAULT_TRANSFORM_CSS = '''
   /* Add spaces around td tags */
   td::before, td::after { content: " "; }
   
+  /* Add brackets around footnote anchors */
+  .fnanchor::before { content: "["; }
+  .fnanchor::after { content: "]"; }
+  
   /* Remove thought breaks */
   .tb { display: none; }
 
@@ -593,6 +597,7 @@ class PgdpFileHtml(PgdpFile):
         """Remove word join (NoBreak) (U+2060)."""
         if self.args.suppress_word_join:
             self.text = re.sub(r"\u2060", r"", self.text)
+            self.text = re.sub(r"&NoBreak;", r"", self.text)
 
     def remove_soft_hyphen(self):
         """Suppress shy (soft hyphen)"""
