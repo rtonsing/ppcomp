@@ -211,6 +211,7 @@ class PgdpFileText(PgdpFile):
         if not filename.lower().endswith('.txt'):
             raise SyntaxError("Not a text file: " + filename)
         super().load(filename)
+        self.from_pgdp_rounds = self.basename.startswith('projectID')
 
     def strip_pg_boilerplate(self):
         """Remove the PG header and footer from the text if present."""
@@ -593,6 +594,7 @@ class PgdpFileHtml(PgdpFile):
         """Remove word join (NoBreak) (U+2060)."""
         if self.args.suppress_word_join:
             self.text = re.sub(r"\u2060", r"", self.text)
+            self.text = re.sub(r"&NoBreak;", r"", self.text)
 
     def remove_soft_hyphen(self):
         """Suppress shy (soft hyphen)"""
