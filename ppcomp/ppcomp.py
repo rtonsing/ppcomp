@@ -211,6 +211,7 @@ class PgdpFileText(PgdpFile):
         if not filename.lower().endswith('.txt'):
             raise SyntaxError("Not a text file: " + filename)
         super().load(filename)
+        self.from_pgdp_rounds = self.basename.startswith('projectID')
 
     def strip_pg_boilerplate(self):
         """Remove the PG header and footer from the text if present."""
