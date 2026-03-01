@@ -600,6 +600,13 @@ class PgdpFileHtml(PgdpFile):
         """Suppress shy (soft hyphen)"""
         self.text = re.sub(r"\u00AD", r"", self.text)
 
+    def remove_zero_width_space(self):
+        """Remove zero width space (U+200B)."""
+        if self.args.ignore_0_space:
+            self.text = re.sub(r"\u200B", r"", self.text)
+            self.text = re.sub(r"&#8203;", r"", self.text)
+            self.text = re.sub(r"&ZeroWidthSpace;", r"", self.text)
+
     def cleanup(self):
         """Perform cleanup for this type of file - build up a list of CSS transform rules,
         process them against tree, then convert to text.
@@ -623,6 +630,8 @@ class PgdpFileHtml(PgdpFile):
         self.remove_nbspaces()
         self.remove_soft_hyphen()
         self.remove_wordjoin()
+        self.remove_zero_width_space()
+
 
     @staticmethod
     def _text_transform(val, errors: list):
